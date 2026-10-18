@@ -1,5 +1,5 @@
 
-const API_URL = "http://127.0.0.1:5000/api/auth";
+const API_URL = `${window.API_BASE_URL}/auth`;
 
 // Display messages safely
 function showMessage(element, message, success = false) {
