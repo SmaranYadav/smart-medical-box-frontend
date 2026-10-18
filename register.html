@@ -14,18 +14,18 @@
         <p class="subtitle">Start managing your medicines safely.</p>
 
         <form id="registerForm">
-            <label>Full name</label>
-            <input type="text" id="full_name" placeholder="Enter your full name" required>
+            <label for="full_name">Full name</label>
+            <input type="text" id="full_name" autocomplete="name" placeholder="Enter your full name" required>
 
-            <label>Email address</label>
-            <input type="email" id="email" placeholder="Enter your email" required>
+            <label for="email">Email address</label>
+            <input type="email" id="email" autocomplete="email" placeholder="Enter your email" required>
 
-            <label>Mobile number</label>
-            <input type="tel" id="mobile_number" placeholder="Enter your mobile number"
+            <label for="mobile_number">Mobile number</label>
+            <input type="tel" id="mobile_number" autocomplete="tel" placeholder="Enter your mobile number"
                    pattern="[0-9+() -]{7,20}" required>
 
-            <label>Password</label>
-            <input type="password" id="password" placeholder="Minimum 8 characters"
+            <label for="password">Password</label>
+            <input type="password" id="password" autocomplete="new-password" placeholder="Minimum 8 characters"
                    minlength="8" required>
 
             <button type="submit" id="registerBtn">Create account</button>
