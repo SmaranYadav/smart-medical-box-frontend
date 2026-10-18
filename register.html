@@ -8,34 +8,56 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="auth-page">
-    <div class="auth-card">
-        <div class="brand"><span>💊</span> Medico.</div>
-        <h1>Create account</h1>
-        <p class="subtitle">Start managing your medicines safely.</p>
+    <main class="auth-shell">
+        <section class="auth-story" aria-label="About Medico">
+            <div class="brand brand-light"><span>✚</span> Medico</div>
+            <div class="story-copy">
+                <p class="eyebrow"><span></span> YOUR DAILY CARE, MADE SIMPLE</p>
+                <h2>A little more care in every day.</h2>
+                <p class="story-description">Keep your medicines and daily routine in one calm, easy-to-use place.</p>
+            </div>
+            <div class="care-visual" aria-hidden="true">
+                <div class="visual-orbit orbit-one"></div>
+                <div class="visual-orbit orbit-two"></div>
+                <div class="visual-plus">+</div>
+                <div class="pill-art"><span></span></div>
+                <div class="schedule-card">
+                    <span class="schedule-icon">✓</span>
+                    <span><strong>Your routine</strong><small>One step at a time</small></span>
+                    <span class="schedule-dots"><i></i><i></i><i></i></span>
+                </div>
+            </div>
+            <p class="story-footnote">A thoughtful way to stay on top of your routine.</p>
+        </section>
 
-        <form id="registerForm">
-            <label for="full_name">Full name</label>
-            <input type="text" id="full_name" autocomplete="name" placeholder="Enter your full name" required>
+        <section class="auth-card" aria-labelledby="authTitle">
+            <div class="auth-mobile-brand brand"><span>✚</span> Medico</div>
+            <p class="form-kicker">GET STARTED</p>
+            <h1 id="authTitle">Make room for better routines.</h1>
+            <p class="subtitle">Create your account to organize your medicines in one place.</p>
 
-            <label for="email">Email address</label>
-            <input type="email" id="email" autocomplete="email" placeholder="Enter your email" required>
+            <form id="registerForm">
+                <label for="full_name">Full name</label>
+                <input type="text" id="full_name" autocomplete="name" placeholder="Enter your full name" required>
 
-            <label for="mobile_number">Mobile number</label>
-            <input type="tel" id="mobile_number" autocomplete="tel" placeholder="Enter your mobile number"
-                   pattern="[0-9+() -]{7,20}" required>
+                <label for="email">Email address</label>
+                <input type="email" id="email" autocomplete="email" placeholder="Enter your email" required>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" autocomplete="new-password" placeholder="Minimum 8 characters"
-                   minlength="8" required>
+                <label for="mobile_number">Mobile number</label>
+                <input type="tel" id="mobile_number" autocomplete="tel" placeholder="Enter your mobile number"
+                       pattern="[0-9+() -]{7,20}" required>
 
-            <button type="submit" id="registerBtn">Create account</button>
-            <p id="message" role="status"></p>
-        </form>
+                <label for="password">Password</label>
+                <input type="password" id="password" autocomplete="new-password" placeholder="Minimum 8 characters"
+                       minlength="8" required>
 
-        <p class="switch">
-            Already registered? <a href="index.html">Login</a>
-        </p>
-    </div>
+                <button type="submit" id="registerBtn">Create account <span aria-hidden="true">→</span></button>
+                <p id="message" role="status"></p>
+            </form>
+
+            <p class="switch">Already registered? <a href="index.html">Sign in <span aria-hidden="true">→</span></a></p>
+        </section>
+    </main>
     <script src="js/config.js"></script>
     <script src="js/app.js"></script>
 </body>

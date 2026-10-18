@@ -8,26 +8,48 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="auth-page">
-    <div class="auth-card">
-        <div class="brand"><span>💊</span> Medico.</div>
-        <h1>Welcome back!</h1>
-        <p class="subtitle">Sign in to manage your medicines.</p>
+    <main class="auth-shell">
+        <section class="auth-story" aria-label="About Medico">
+            <div class="brand brand-light"><span>✚</span> Medico</div>
+            <div class="story-copy">
+                <p class="eyebrow"><span></span> YOUR DAILY CARE, MADE SIMPLE</p>
+                <h2>A little more care in every day.</h2>
+                <p class="story-description">Keep your medicines and daily routine in one calm, easy-to-use place.</p>
+            </div>
+            <div class="care-visual" aria-hidden="true">
+                <div class="visual-orbit orbit-one"></div>
+                <div class="visual-orbit orbit-two"></div>
+                <div class="visual-plus">+</div>
+                <div class="pill-art"><span></span></div>
+                <div class="schedule-card">
+                    <span class="schedule-icon">✓</span>
+                    <span><strong>Your routine</strong><small>One step at a time</small></span>
+                    <span class="schedule-dots"><i></i><i></i><i></i></span>
+                </div>
+            </div>
+            <p class="story-footnote">A thoughtful way to stay on top of your routine.</p>
+        </section>
 
-        <form id="loginForm">
-            <label for="email">Email address</label>
-            <input type="email" id="email" autocomplete="email" placeholder="Enter your email" required>
+        <section class="auth-card" aria-labelledby="authTitle">
+            <div class="auth-mobile-brand brand"><span>✚</span> Medico</div>
+            <p class="form-kicker">WELCOME BACK</p>
+            <h1 id="authTitle">Good to see you.</h1>
+            <p class="subtitle">Sign in to manage your medicines.</p>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" autocomplete="current-password" placeholder="Enter password" required>
+            <form id="loginForm">
+                <label for="email">Email address</label>
+                <input type="email" id="email" autocomplete="email" placeholder="Enter your email" required>
 
-            <button type="submit" id="loginBtn">Login</button>
-            <p id="message" role="status"></p>
-        </form>
+                <label for="password">Password</label>
+                <input type="password" id="password" autocomplete="current-password" placeholder="Enter password" required>
 
-        <p class="switch">New to Medico?
-            <a href="register.html">Create an account</a>
-        </p>
-    </div>
+                <button type="submit" id="loginBtn">Sign in <span aria-hidden="true">→</span></button>
+                <p id="message" role="status"></p>
+            </form>
+
+            <p class="switch">New to Medico? <a href="register.html">Create an account <span aria-hidden="true">→</span></a></p>
+        </section>
+    </main>
     <script src="js/config.js"></script>
     <script src="js/app.js"></script>
 </body>
