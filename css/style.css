@@ -1,0 +1,98 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #292b36;
+}
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    background: linear-gradient(135deg, #fff4f1, #f4f5fa);
+}
+
+.auth-card {
+    background: white;
+    width: 100%;
+    max-width: 420px;
+    padding: 38px;
+    border-radius: 22px;
+    box-shadow: 0 12px 45px #25243b12;
+}
+
+.brand {
+    color: #ef796c;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 35px;
+}
+
+.brand span {
+    background: #fff0ed;
+    border-radius: 50%;
+    padding: 8px;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.subtitle, .switch {
+    color: #858795;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+label {
+    display: block;
+    margin: 20px 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #dedfe6;
+    border-radius: 10px;
+    font-size: 15px;
+    outline-color: #ef796c;
+}
+
+button {
+    width: 100%;
+    border: 0;
+    padding: 14px;
+    margin-top: 24px;
+    background: #ef796c;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #e7685b;
+}
+
+a {
+    color: #ef796c;
+    text-decoration: none;
+}
+
+.switch {
+    text-align: center;
+    margin-top: 25px;
+}
+
+#message {
+    font-size: 14px;
+}

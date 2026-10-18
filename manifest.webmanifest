@@ -1,0 +1,10 @@
+
+{
+  "name": "Smart Medical Box",
+  "short_name": "Medical Box",
+  "start_url": "./dashboard.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2"
+}

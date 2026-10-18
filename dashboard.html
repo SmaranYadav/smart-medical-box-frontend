@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medico | Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <meta name="theme-color" content="#1976d2">
+
+    <style>
+        body { background: #f8f5f5; }
+
+        .app { display: flex; min-height: 100vh; }
+
+        .sidebar {
+            width: 220px;
+            background: white;
+            padding: 28px 20px;
+            border-right: 1px solid #eee;
+            flex-shrink: 0;
+        }
+
+        .brand { margin-bottom: 38px; font-weight: bold; }
+
+        .nav-link {
+            display: block;
+            padding: 13px;
+            margin: 8px 0;
+            color: #777;
+            border-radius: 9px;
+            cursor: pointer;
+        }
+
+        .nav-link.active,
+        .nav-link:hover {
+            background: #fff0ed;
+            color: #ef796c;
+        }
+
+        .main { flex: 1; padding: 30px; min-width: 0; }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 { font-size: 25px; }
+        .welcome { color: #777; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .panel, .stat {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #25243b08;
+        }
+
+        .stat h3 {
+            margin: 0 0 12px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .stat strong { font-size: 28px; }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .primary {
+            background: #ef796c;
+            color: white;
+            border: 0;
+            border-radius: 9px;
+            padding: 12px 18px;
+            cursor: pointer;
+            margin: 0;
+            width: auto;
+        }
+
+        .medicine-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .medicine {
+            border: 1px solid #eee;
+            padding: 16px;
+            border-radius: 11px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .medicine p {
+            color: #777;
+            margin: 7px 0;
+            font-size: 14px;
+        }
+
+        .actions { display: flex; gap: 8px; }
+
+        .small-btn {
+            width: auto;
+            margin: 0;
+            padding: 8px 12px;
+            border-radius: 7px;
+            font-size: 13px;
+        }
+
+        .secondary { background: #eee; color: #333; }
+        .danger { background: #ffe9e6; color: #c84438; }
+
+        .empty {
+            color: #888;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #0007;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .modal.open { display: flex; }
+
+        .modal-content {
+            width: 100%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+        }
+
+        .modal-content input,
+        .modal-content select,
+        .modal-content textarea {
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .modal-content label {
+            display: block;
+            margin: 10px 0 6px;
+        }
+
+        .modal-actions { display: flex; gap: 10px; }
+        .modal-actions button { flex: 1; }
+
+        .notice { margin: 15px 0; color: #198754; }
+
+        button:disabled { opacity: .6; cursor: not-allowed; }
+
+        .reminder-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .sound-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .sound-option input {
+            width: auto;
+            margin: 0;
+        }
+
+        @media (max-width: 800px) {
+            .sidebar { width: 170px; padding: 20px 10px; }
+            .main { padding: 18px; }
+            .stats { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 520px) {
+            .app { display: block; }
+            .sidebar { width: auto; padding: 12px; }
+            .brand { margin: 8px; }
+            .nav-link { display: inline-block; padding: 9px; }
+            .topbar { align-items: flex-start; }
+            .topbar h1 { font-size: 21px; }
+            .panel, .stat { padding: 16px; }
+        }
+    </style>
+</head>
+
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <div class="brand"><span>💊</span> Medico.</div>
+        <div class="nav-link active">▦ Dashboard</div>
+        <div class="nav-link" id="trackerNav">◷ Medication Tracker</div>
+        <div class="nav-link" id="medicinesNav">▣ Medicines</div>
+        <div class="nav-link" id="remindersNav">🔔 Reminders</div>
+        <div class="nav-link" id="logoutBtn">↪ Logout</div>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div>
+                <h1>Smart Medical Box</h1>
+                <div class="welcome" id="welcome">
+                    Loading your account...
+                </div>
+            </div>
+            <span>💊 Medico</span>
+        </div>
+
+        <div id="notice" class="notice" role="status"></div>
+
+        <section class="stats">
+            <div class="stat">
+                <h3>Active medicines</h3>
+                <strong id="activeCount">0</strong>
+            </div>
+
+            <div class="stat">
+                <h3>Doses scheduled today</h3>
+                <strong id="doseCount">0</strong>
+            </div>
+
+            <div class="stat">
+                <h3>Completed courses</h3>
+                <strong id="completedCount">0</strong>
+            </div>
+        </section>
+
+        <section class="panel" id="tracker">
+            <div class="section-title">
+                <div>
+                    <h2>Medication Tracker</h2>
+                    <p class="welcome">
+                        Manage your medicine courses and dose schedules.
+                    </p>
+                </div>
+
+                <button type="button" class="primary" id="addMedicineBtn">
+                    + Add medicine
+                </button>
+            </div>
+
+            <div id="medicineList" class="medicine-list">
+                <p class="empty">Loading medicines...</p>
+            </div>
+        </section>
+
+        <!-- Push notification settings -->
+        <section class="panel" id="reminderPanel" style="margin-top:22px">
+            <h2>Medicine reminders</h2>
+
+            <p class="welcome">
+                Enable push notifications to receive scheduled medicine
+                reminders even when the dashboard is closed.
+            </p>
+
+            <p id="reminderStatus" role="status" aria-live="polite">
+                Push notifications are not enabled yet.
+            </p>
+
+            <div class="reminder-buttons">
+                <button type="button" class="primary" id="enableReminders">
+                    Enable push notifications
+                </button>
+
+                <button type="button" class="primary" id="testPush">
+                    Send test notification
+                </button>
+            </div>
+
+            <label class="sound-option">
+                <input type="checkbox" id="reminderSound" checked>
+                Play sound when the dashboard is open
+            </label>
+
+            <p class="welcome">
+                Notifications require browser permission. Sound and vibration
+                depend on your device, browser, and notification settings.
+            </p>
+        </section>
+    </main>
+</div>
+
+<!-- Add medicine modal -->
+<div class="modal" id="medicineModal">
+    <div class="modal-content">
+        <h2 id="modalTitle">Add medicine</h2>
+
+        <form id="medicineForm">
+            <label for="medicine_name">Medicine name</label>
+            <input id="medicine_name" required maxlength="150"
+                   placeholder="e.g. Medicine A">
+
+            <label for="dosage">Dosage</label>
+            <input id="dosage" required maxlength="100"
+                   placeholder="e.g. 1 tablet">
+
+            <label for="frequency">Doses per day</label>
+            <select id="frequency" required>
+                <option value="1">Once a day</option>
+                <option value="2">Twice a day</option>
+                <option value="3">Three times a day</option>
+                <option value="4">Four times a day</option>
+            </select>
+
+            <label for="dose_times">
+                Dose times (24-hour format, comma-separated)
+            </label>
+            <input id="dose_times" required placeholder="09:00,21:00">
+
+            <label for="start_date">Start date</label>
+            <input type="date" id="start_date" required>
+
+            <label for="end_date">End date</label>
+            <input type="date" id="end_date" required>
+
+            <label for="instructions">Instructions</label>
+            <textarea id="instructions" rows="3"
+                      placeholder="Optional instructions"></textarea>
+
+            <div class="modal-actions">
+                <button type="button"
+                        class="primary secondary"
+                        id="cancelModal">
+                    Cancel
+                </button>
+
+                <button type="submit"
+                        class="primary"
+                        id="saveMedicineBtn">
+                    Save medicine
+                </button>
+            </div>
+
+            <p id="formMessage" role="status"></p>
+        </form>
+    </div>
+</div>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>

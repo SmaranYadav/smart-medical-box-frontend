@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Medicines | Smart Medical Box</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #243247;
+        }
+
+        header {
+            background: #1976d2;
+            color: white;
+            padding: 18px 24px;
+        }
+
+        header h2 {
+            margin: 0 0 12px;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 25px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        .panel {
+            background: white;
+            padding: 24px;
+            margin-bottom: 22px;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px #0000000d;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            font: inherit;
+            padding: 11px;
+            border: 1px solid #ccd5e0;
+            border-radius: 7px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            background: white;
+        }
+
+        button {
+            background: #1976d2;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #125eaa;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .dose-times {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .dose-field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .form-actions {
+            margin-top: 18px;
+        }
+
+        #message {
+            margin-top: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .medicine {
+            border-bottom: 1px solid #e5eaf0;
+            padding: 16px 0;
+        }
+
+        .medicine:last-child {
+            border-bottom: none;
+        }
+
+        .medicine h3 {
+            margin-top: 0;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .status-active {
+            color: #16834a;
+        }
+
+        .status-completed {
+            color: #64748b;
+        }
+
+        .status-deleted {
+            color: #b42318;
+        }
+
+        .secondary-button {
+            background: #526579;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 650px) {
+            main {
+                padding: 12px;
+                margin: 12px auto;
+            }
+
+            .panel {
+                padding: 16px;
+            }
+
+            .form-grid,
+            .dose-times {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h2>Smart Medical Box</h2>
+
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="medicines.html">Medicines</a>
+            <a href="index.html">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>My Medicines</h1>
+        <p>View and add your medicines below.</p>
+
+        <section class="panel">
+            <h2>Add a Medicine</h2>
+
+            <form id="medicineForm">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="medicineName">Medicine name</label>
+                        <input
+                            id="medicineName"
+                            type="text"
+                            maxlength="150"
+                            placeholder="e.g. Paracetamol"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="dosage">Dosage</label>
+                        <input
+                            id="dosage"
+                            type="text"
+                            maxlength="100"
+                            placeholder="e.g. 500mg"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="frequency">Doses per day</label>
+                        <select id="frequency" required>
+                            <option value="1">1 time</option>
+                            <option value="2">2 times</option>
+                            <option value="3">3 times</option>
+                            <option value="4">4 times</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="instructions">
+                            Instructions (optional)
+                        </label>
+                        <input
+                            id="instructions"
+                            type="text"
+                            placeholder="e.g. Take after food"
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="startDate">Start date</label>
+                        <input id="startDate" type="date" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="endDate">End date</label>
+                        <input id="endDate" type="date" required>
+                    </div>
+                </div>
+
+                <h3>Dose times</h3>
+                <p>Select a time for every daily dose.</p>
+
+                <div id="doseTimesContainer" class="dose-times"></div>
+
+                <div class="form-actions">
+                    <button id="addMedicineBtn" type="submit">
+                        Add Medicine
+                    </button>
+                </div>
+
+                <p id="message" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="panel">
+            <h2>Medicine List</h2>
+
+            <div id="medicineList" aria-live="polite">
+                Loading medicines...
+            </div>
+
+            <button
+                id="refreshBtn"
+                class="secondary-button"
+                type="button"
+            >
+                Refresh
+            </button>
+        </section>
+    </main>
+
+    <script src="./js/medicines.js"></script>
+</body>
+</html>
