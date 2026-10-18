@@ -445,7 +445,7 @@ label {
     }
 
     .auth-story {
-        min-height: 410px;
+        min-height: 480px;
         padding: 30px 34px 27px;
     }
 
@@ -464,15 +464,16 @@ label {
     }
 
     .care-visual {
-        position: absolute;
-        right: -12px;
-        bottom: -35px;
-        width: 220px;
+        position: relative;
+        right: auto;
+        bottom: auto;
+        width: min(100%, 420px);
         height: 190px;
-        margin: 0;
-        opacity: .9;
-        transform: scale(.72);
-        transform-origin: right bottom;
+        flex: 0 0 190px;
+        margin: 0 auto -12px;
+        opacity: 1;
+        transform: scale(.82);
+        transform-origin: center;
     }
 
     .story-footnote {
