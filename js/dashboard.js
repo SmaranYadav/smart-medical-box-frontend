@@ -665,6 +665,13 @@ async function playReminderSound() {
 // The service worker can notify an open dashboard when a push arrives.
 navigator.serviceWorker?.addEventListener("message", event => {
     if (event.data?.type === "MEDICINE_PUSH_RECEIVED") {
+        if (
+            document.visibilityState === "visible" &&
+            "vibrate" in navigator
+        ) {
+            navigator.vibrate([250, 100, 250, 100, 450]);
+        }
+
         playReminderSound();
     }
 });

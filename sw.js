@@ -34,12 +34,21 @@ self.addEventListener("push", (event) => {
     };
 
     event.waitUntil((async () => {
-        await self.registration.showNotification(title, options);
-
         const windowClients = await self.clients.matchAll({
             type: "window",
             includeUncontrolled: true
         });
+        const visibleDashboard = windowClients.find(client =>
+            client.url.startsWith(self.registration.scope) &&
+            new URL(client.url).pathname.endsWith("/dashboard.html") &&
+            client.visibilityState === "visible"
+        );
+
+        if (visibleDashboard) {
+            options.vibrate = [];
+        }
+
+        await self.registration.showNotification(title, options);
 
         for (const client of windowClients) {
             if (
