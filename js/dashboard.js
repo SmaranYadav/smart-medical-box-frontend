@@ -42,6 +42,11 @@ async function initializeDashboard() {
     try {
         await loadProfile();
     } catch (error) {
+        if (error.message === "Please log in") {
+            window.location.replace("index.html");
+            return;
+        }
+
         console.warn("Could not load profile:", error.message);
     }
 
