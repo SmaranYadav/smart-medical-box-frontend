@@ -1,4 +1,12 @@
 
+self.addEventListener("install", (event) => {
+    event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener("activate", (event) => {
+    event.waitUntil(self.clients.claim());
+});
+
 self.addEventListener("push", (event) => {
     let data = {};
 
@@ -19,13 +27,29 @@ self.addEventListener("push", (event) => {
         data: {
             url: data.url || "./dashboard.html"
         },
-        vibrate: [200, 100, 200],
-        renotify: true
+        vibrate: [250, 100, 250, 100, 450],
+        renotify: true,
+        requireInteraction: true,
+        silent: false
     };
 
-    event.waitUntil(
-        self.registration.showNotification(title, options)
-    );
+    event.waitUntil((async () => {
+        await self.registration.showNotification(title, options);
+
+        const windowClients = await self.clients.matchAll({
+            type: "window",
+            includeUncontrolled: true
+        });
+
+        for (const client of windowClients) {
+            if (
+                client.url.startsWith(self.registration.scope) &&
+                new URL(client.url).pathname.endsWith("/dashboard.html")
+            ) {
+                client.postMessage({ type: "MEDICINE_PUSH_RECEIVED" });
+            }
+        }
+    })());
 });
 
 self.addEventListener("notificationclick", (event) => {

@@ -5,6 +5,7 @@ const API_URL = `${API_BASE}/medicines`;
 let reminderTimer = null;
 const notifiedDoses = new Set();
 let serviceWorkerRegistration = null;
+let reminderAudioContext = null;
 
 document.addEventListener("DOMContentLoaded", initializeDashboard);
 
@@ -463,6 +464,17 @@ async function setupPushNotifications() {
 
     if (!enableButton || !testButton) return;
 
+    document.addEventListener(
+        "pointerdown",
+        unlockReminderAudio,
+        { once: true }
+    );
+    document.addEventListener(
+        "keydown",
+        unlockReminderAudio,
+        { once: true }
+    );
+
     if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
         setReminderStatus(
             "Push notifications are not supported by this browser.",
@@ -595,15 +607,40 @@ async function sendTestPush() {
 
 // ---------------- OPTIONAL SOUND WHEN DASHBOARD IS OPEN ----------------
 
-function playReminderSound() {
+function getReminderAudioContext() {
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return null;
+
+    if (!reminderAudioContext) {
+        reminderAudioContext = new AudioContextClass();
+    }
+
+    return reminderAudioContext;
+}
+
+function unlockReminderAudio() {
+    const audioContext = getReminderAudioContext();
+
+    if (audioContext?.state === "suspended") {
+        audioContext.resume().catch(error => {
+            console.warn("Could not enable reminder audio:", error);
+        });
+    }
+}
+
+async function playReminderSound() {
     const soundOption = document.getElementById("reminderSound");
 
     if (!soundOption?.checked) return;
 
     try {
-        const audioContext = new (
-            window.AudioContext || window.webkitAudioContext
-        )();
+        const audioContext = getReminderAudioContext();
+        if (!audioContext) return;
+        if (audioContext.state === "suspended") {
+            await audioContext.resume();
+        }
 
         const oscillator = audioContext.createOscillator();
         const gain = audioContext.createGain();
@@ -619,7 +656,6 @@ function playReminderSound() {
 
         window.setTimeout(() => {
             oscillator.stop();
-            audioContext.close();
         }, 300);
     } catch (error) {
         console.warn("Could not play reminder sound:", error);
