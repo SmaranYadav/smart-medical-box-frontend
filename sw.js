@@ -1,5 +1,5 @@
 
-const SHELL_CACHE = "medico-app-shell-v1";
+const SHELL_CACHE = "medico-app-shell-v2";
 const APP_SHELL = [
     "./index.html",
     "./register.html",
