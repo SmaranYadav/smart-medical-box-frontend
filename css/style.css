@@ -992,3 +992,54 @@ label {
         transition-duration: .01ms !important;
     }
 }
+
+.pwa-install {
+    position: fixed;
+    z-index: 20;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: min(360px, calc(100vw - 32px));
+    padding: 10px 12px;
+    color: var(--ink);
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    box-shadow: 0 12px 36px #173b3526;
+}
+
+.pwa-install button {
+    min-height: 40px;
+    padding: 9px 14px;
+    color: white;
+    background: var(--primary);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.pwa-install button:hover { background: var(--primary-dark); }
+
+.pwa-install-hint {
+    max-width: 210px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.pwa-install[hidden],
+.pwa-install-hint[hidden] { display: none; }
+
+@media (max-width: 520px) {
+    .pwa-install {
+        right: 12px;
+        bottom: calc(12px + env(safe-area-inset-bottom));
+        left: 12px;
+        justify-content: space-between;
+        max-width: none;
+    }
+}

@@ -1,10 +1,29 @@
 
 {
-  "name": "Smart Medical Box",
-  "short_name": "Medical Box",
+  "id": "./",
+  "name": "Medico - Smart Medical Box",
+  "short_name": "Medico",
+  "description": "Keep your medicines and daily routine in one calm, easy-to-use place.",
   "start_url": "./dashboard.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1976d2"
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#f3f8f7",
+  "theme_color": "#157d72",
+  "categories": ["health", "medical"],
+  "icons": [
+    {
+      "src": "./assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }

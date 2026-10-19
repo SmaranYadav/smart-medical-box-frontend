@@ -1,10 +1,82 @@
 
+const SHELL_CACHE = "medico-app-shell-v1";
+const APP_SHELL = [
+    "./index.html",
+    "./register.html",
+    "./dashboard.html",
+    "./medicines.html",
+    "./manifest.webmanifest",
+    "./css/style.css",
+    "./js/config.js",
+    "./js/app.js",
+    "./js/dashboard.js",
+    "./js/medicines.js",
+    "./js/pwa.js",
+    "./assets/icon-192.png",
+    "./assets/icon-512.png"
+];
+
 self.addEventListener("install", (event) => {
-    event.waitUntil(self.skipWaiting());
+    event.waitUntil(
+        caches.open(SHELL_CACHE)
+            .then(cache => cache.addAll(APP_SHELL))
+            .then(() => self.skipWaiting())
+    );
 });
 
 self.addEventListener("activate", (event) => {
-    event.waitUntil(self.clients.claim());
+    event.waitUntil((async () => {
+        const cacheNames = await caches.keys();
+        await Promise.all(cacheNames
+            .filter(name => name.startsWith("medico-app-shell-") && name !== SHELL_CACHE)
+            .map(name => caches.delete(name)));
+        await self.clients.claim();
+    })());
+});
+
+self.addEventListener("fetch", (event) => {
+    const request = event.request;
+    const requestUrl = new URL(request.url);
+
+    if (
+        request.method !== "GET" ||
+        requestUrl.origin !== self.location.origin ||
+        requestUrl.pathname === "/api" ||
+        requestUrl.pathname.startsWith("/api/")
+    ) {
+        return;
+    }
+
+    if (request.mode === "navigate") {
+        event.respondWith((async () => {
+            try {
+                const response = await fetch(request);
+                if (response.ok) {
+                    const cache = await caches.open(SHELL_CACHE);
+                    await cache.put(request, response.clone());
+                }
+                return response;
+            } catch {
+                return await caches.match(request) ||
+                    await caches.match(new URL("./index.html", self.registration.scope));
+            }
+        })());
+        return;
+    }
+
+    event.respondWith((async () => {
+        const cachedResponse = await caches.match(request);
+        if (cachedResponse) {
+            return cachedResponse;
+        }
+
+        const response = await fetch(request);
+        if (response.ok && response.type === "basic") {
+            const cache = await caches.open(SHELL_CACHE);
+            await cache.put(request, response.clone());
+        }
+        return response;
+    })());
 });
 
 self.addEventListener("push", (event) => {
