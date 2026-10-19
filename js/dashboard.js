@@ -669,7 +669,7 @@ navigator.serviceWorker?.addEventListener("message", event => {
             document.visibilityState === "visible" &&
             "vibrate" in navigator
         ) {
-            navigator.vibrate([250, 100, 250, 100, 450]);
+            navigator.vibrate([700, 180, 700, 180, 1000, 250, 700]);
         }
 
         playReminderSound();

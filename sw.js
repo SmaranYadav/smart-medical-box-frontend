@@ -27,7 +27,7 @@ self.addEventListener("push", (event) => {
         data: {
             url: data.url || "./dashboard.html"
         },
-        vibrate: [250, 100, 250, 100, 450],
+        vibrate: [700, 180, 700, 180, 1000, 250, 700],
         renotify: true,
         requireInteraction: true,
         silent: false
